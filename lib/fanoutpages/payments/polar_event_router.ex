@@ -179,4 +179,44 @@ defmodule Fanoutpages.Payments.PolarEventRouter do
       started_at: attrs.started_at
     }
   end
+
+  defp organization_status(status) when status in ["active", "trialing"], do: status
+  defp organization_status("past_due"), do: "past_due"
+  defp organization_status("canceled"), do: "canceled"
+  defp organization_status("unpaid"), do: "expired"
+  defp organization_status(_status), do: "expired"
+
+  defp normalize_status(nil), do: "unknown"
+  defp normalize_status(status), do: String.downcase(status)
+
+  defp cancel_at_period_end?(data) do
+    data["cancel_at_period_end"] == true ||
+      (is_binary(data["cancel_at"]) and is_nil(data["ended_at"]))
+  end
+
+  defp resource_attrs(data) do
+    %{
+      resource_type: data["type"],
+      resource_id: data["id"]
+    }
+  end
+
+  defp customer_id(data),
+    do: nested(data, [["customer_id"], ["customer", "id"]])
+
+  defp subscription_id(data, event_type) do
+    nested(data, [
+      ["subscription_id"],
+      ["subscription", "id"],
+      if(String.starts_with?(event_type, "subscription"), do: ["id"], else: [])
+    ])
+  end
+
+  defp order_id(data, event_type) do
+    nested(data, [
+      ["order_id"],
+      ["order", "id"],
+      if(String.starts_with?(event_type, "order"), do: ["id"], else: [])
+    ])
+  end
 end
