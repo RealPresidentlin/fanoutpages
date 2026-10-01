@@ -76,9 +76,9 @@ defmodule FanoutpagesWeb.HomeLive do
 
               <div>
                 <.icon name="hero-code-bracket" class="size-7 text-accent mb-4" />
-                <h3 class="text-xl font-bold mb-2">Direct API & MCP Access</h3>
+                <h3 class="text-xl font-bold mb-2">MCP Access</h3>
                 <p class="text-sm leading-relaxed text-base-content/65">
-                  Use REST and MCP to read workspace data, create drafts, submit them for review, and inspect publication status. MCP also supports draft updates.
+                  MCP to read workspace data, create drafts, submit them for review, and inspect publication status. MCP also supports draft updates.
                 </p>
               </div>
             </div>
