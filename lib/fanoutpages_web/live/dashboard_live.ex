@@ -237,16 +237,6 @@ defmodule FanoutpagesWeb.DashboardLive do
                 </div>
               </div>
 
-              <div>
-                <div class="flex justify-between text-xs font-medium mb-1">
-                  <span class="text-base-content/60">Concurrent AI Agent Runs</span>
-                
-                </div>
-                <div class="h-2 w-full rounded-full bg-base-200 overflow-hidden">
-                  <div class="h-full bg-accent" style="width: 0%"></div>
-                </div>
-              </div>
-
               <div class="pt-2">
                 <.link
                   navigate={~p"/pricing"}
