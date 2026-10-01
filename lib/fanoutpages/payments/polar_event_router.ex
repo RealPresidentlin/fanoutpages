@@ -122,4 +122,61 @@ defmodule Fanoutpages.Payments.PolarEventRouter do
       org -> {:ok, org}
     end
   end
+
+  defp subscription_attrs(data) do
+    subscription_id = subscription_id(data, "subscription")
+
+    with true <- is_binary(subscription_id) || {:error, :missing_subscription_id},
+         product_id when is_binary(product_id) <- product_id(data),
+         plan when is_binary(plan) <- PlanConfig.plan_from_product_id(product_id),
+         status when status in @subscription_statuses <- normalize_status(data["status"]) do
+      {:ok,
+       %{
+         polar_subscription_id: subscription_id,
+         polar_customer_id: customer_id(data),
+         polar_price_id: price_id(data),
+         polar_product_id: product_id,
+         polar_product_name: nested(data, [["product", "name"]]),
+         polar_checkout_id: nested(data, [["checkout_id"], ["checkout", "id"]]),
+         plan: plan,
+         status: status,
+         amount_cents: amount(data),
+         currency: data["currency"],
+         current_period_start: parse_datetime(data["current_period_start"]),
+         current_period_end: parse_datetime(data["current_period_end"]),
+         started_at: parse_datetime(data["started_at"]),
+         ends_at: parse_datetime(data["ends_at"]),
+         canceled_at: parse_datetime(data["canceled_at"]),
+         ended_at: parse_datetime(data["ended_at"]),
+         provider_modified_at: parse_datetime(data["modified_at"]),
+         cancel_at_period_end: cancel_at_period_end?(data),
+         metadata: data["metadata"] || %{},
+         raw_event: data
+       }}
+    else
+      {:error, reason} -> {:error, reason}
+      nil -> {:error, :unknown_polar_product}
+      "unknown" -> {:error, :unknown_subscription_status}
+      _status -> {:error, :unknown_subscription_status}
+    end
+  end
+
+  defp organization_attrs(attrs) do
+    status = attrs.status
+
+    %{
+      plan: attrs.plan,
+      subscription_status: organization_status(status),
+      polar_customer_id: attrs.polar_customer_id,
+      polar_subscription_id: attrs.polar_subscription_id,
+      polar_product_id: attrs.polar_product_id,
+      polar_price_id: attrs.polar_price_id,
+      polar_checkout_id: attrs.polar_checkout_id,
+      current_period_start: attrs.current_period_start,
+      current_period_end: attrs.current_period_end,
+      ends_at: attrs.ends_at,
+      cancel_at_period_end: attrs.cancel_at_period_end,
+      started_at: attrs.started_at
+    }
+  end
 end
