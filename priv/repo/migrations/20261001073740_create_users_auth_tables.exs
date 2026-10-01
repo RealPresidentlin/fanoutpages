@@ -1,5 +1,5 @@
 defmodule Fanoutpages.Repo.Migrations.CreateUsersAuthTables do
- use Ecto.Migration
+  use Ecto.Migration
 
   def change do
     execute("CREATE EXTENSION IF NOT EXISTS citext", "")
