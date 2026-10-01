@@ -1,6 +1,6 @@
 defmodule Fanoutpages.Billing.PlanConfig do
   @moduledoc """
-  Canonical plan definitions, quotas, add-ons and Polar product mapping for Fanout Pages.
+  Canonical plan definitions, quotas, add-ons and Polar product mapping for FanoutPages.
   """
 
   @plans %{
@@ -10,51 +10,50 @@ defmodule Fanoutpages.Billing.PlanConfig do
       audience: :business,
       price_monthly_cents: 2_900,
       price_annual_effective_cents: 2_400,
-      description: "For creators and single businesses managing their own social presence.",
+      description:
+        "For creators and individual businesses managing their own social media presence.",
       recommended: false,
       quotas: %{
         max_workspaces: 1,
-        max_social_accounts: 5,
-        max_humans: 2,
-        agents_per_human: 3,
-        max_agents: 3,
-        max_concurrent_agent_runs: 1
+        max_social_accounts: 10,
+        max_humans: :unlimited,
+        agents_per_human: :unlimited,
+        max_agents: :unlimited,
+        storage_bytes: 5_000_000_000
       },
       history_retention_days: 30,
       features: %{
         unlimited_posts: true,
         api_access: true,
         mcp_access: true,
-        automations_webhooks: true,
         approvals: true,
-        analytics: true
+        analytics: false
       }
     },
     "business" => %{
       id: "business",
       name: "Business",
       audience: :business,
-      price_monthly_cents: 7_900,
-      price_annual_effective_cents: 6_500,
+      price_monthly_cents: 5_900,
+      price_annual_effective_cents: 4_900,
       description:
-        "For growing companies scaling their in-house social operations with AI agents.",
+        "For growing single-brand teams scaling social publishing with their AI teammates.",
       recommended: true,
       quotas: %{
         max_workspaces: 1,
-        max_social_accounts: 15,
-        max_humans: 5,
-        agents_per_human: 3,
-        max_agents: 10,
-        max_concurrent_agent_runs: 3
+        max_social_accounts: 25,
+        max_humans: :unlimited,
+        agents_per_human: :unlimited,
+        max_agents: :unlimited,
+        storage_bytes: 5_000_000_000
       },
       history_retention_days: 90,
       features: %{
         unlimited_posts: true,
         api_access: true,
         mcp_access: true,
-        automations_webhooks: true,
         approvals: true,
-        analytics: true
+        analytics: false
       }
     },
     "core" => %{
@@ -63,74 +62,74 @@ defmodule Fanoutpages.Billing.PlanConfig do
       audience: :agency,
       price_monthly_cents: 11_900,
       price_annual_effective_cents: 9_900,
-      description: "Run one social operation with humans and agents working together.",
+      description:
+        "Manage multiple brands or clients with your human and AI teammates in one system.",
       recommended: false,
       quotas: %{
         max_workspaces: 3,
-        max_social_accounts: 20,
-        max_humans: 10,
-        agents_per_human: 3,
-        max_agents: 15,
-        max_concurrent_agent_runs: 3
+        max_social_accounts: 45,
+        max_humans: :unlimited,
+        agents_per_human: :unlimited,
+        max_agents: :unlimited,
+        storage_bytes: 5_000_000_000
       },
       history_retention_days: 90,
       features: %{
         unlimited_posts: true,
         api_access: true,
         mcp_access: true,
-        automations_webhooks: true,
         approvals: true,
-        analytics: true
+        analytics: false
       }
     },
     "scale" => %{
       id: "scale",
       name: "Scale",
+      audience: :agency,
       price_monthly_cents: 24_900,
       price_annual_effective_cents: 19_900,
-      description: "Run multiple brands, teams, or client accounts with serious capacity.",
+      description: "Manage multiple brands and client accounts with high publishing capacity.",
       recommended: true,
       quotas: %{
         max_workspaces: 10,
-        max_social_accounts: 60,
+        max_social_accounts: 150,
         max_humans: :unlimited,
-        agents_per_human: 3,
-        max_agents: 50,
-        max_concurrent_agent_runs: 10
+        agents_per_human: :unlimited,
+        max_agents: :unlimited,
+        storage_bytes: 5_000_000_000
       },
       history_retention_days: 365,
       features: %{
         unlimited_posts: true,
         api_access: true,
         mcp_access: true,
-        automations_webhooks: true,
         approvals: true,
-        analytics: true
+        analytics: false
       }
     },
     "pro" => %{
       id: "pro",
       name: "Pro",
+      audience: :agency,
       price_monthly_cents: 44_900,
       price_annual_effective_cents: 35_900,
-      description: "For agencies and large operations managing fleet-scale publishing.",
+      description: "For agencies and large organizations managing high-volume publishing.",
       recommended: false,
       quotas: %{
         max_workspaces: 25,
-        max_social_accounts: 150,
+        max_social_accounts: 375,
         max_humans: :unlimited,
-        agents_per_human: 3,
-        max_agents: 125,
-        max_concurrent_agent_runs: 25
+        agents_per_human: :unlimited,
+        max_agents: :unlimited,
+        storage_bytes: 5_000_000_000
       },
       history_retention_days: 730,
       features: %{
         unlimited_posts: true,
         api_access: true,
         mcp_access: true,
-        automations_webhooks: true,
         approvals: true,
-        analytics: true
+        analytics: false
       }
     }
   }
@@ -156,25 +155,13 @@ defmodule Fanoutpages.Billing.PlanConfig do
       id: "workspace",
       name: "Additional Workspace",
       price_monthly_cents: 3_900,
-      description: "+1 brand or client environment"
+      description: "+1 brand or client workspace"
     },
     %{
       id: "social_accounts",
       name: "Social Accounts Bundle",
       price_monthly_cents: 2_900,
-      description: "+25 connected social profiles"
-    },
-    %{
-      id: "agents",
-      name: "Autonomous Agents Bundle",
-      price_monthly_cents: 7_900,
-      description: "+10 active AI agents"
-    },
-    %{
-      id: "concurrency",
-      name: "Concurrency Expansion",
-      price_monthly_cents: 4_900,
-      description: "+5 concurrent agent runs"
+      description: "+30 connected social profiles"
     }
   ]
 
@@ -182,6 +169,17 @@ defmodule Fanoutpages.Billing.PlanConfig do
 
   def get(plan) when is_binary(plan), do: Map.get(@plans, String.downcase(plan))
   def get(_plan), do: nil
+
+  def storage_bytes(plan) do
+    case get(plan) do
+      %{quotas: %{storage_bytes: bytes}} -> bytes
+      _ -> 5_000_000_000
+    end
+  end
+
+  def available_for_account_type?(plan, "business") when plan in ~w(starter business), do: true
+  def available_for_account_type?(plan, "agency") when plan in ~w(core scale pro), do: true
+  def available_for_account_type?(_plan, _account_type), do: false
 
   def entitlements(plan) when is_binary(plan) do
     with %{} = config <- get(plan) do
@@ -205,11 +203,9 @@ defmodule Fanoutpages.Billing.PlanConfig do
       max_humans: 0,
       agents_per_human: 0,
       max_agents: 0,
-      max_concurrent_agent_runs: 0,
       unlimited_posts: false,
       api_access: false,
       mcp_access: false,
-      automations_webhooks: false,
       approvals: false,
       analytics: false
     }
@@ -244,6 +240,8 @@ defmodule Fanoutpages.Billing.PlanConfig do
 
   def product_id("pro", :annual),
     do: Application.get_env(:fanoutpages, :polar_pro_annual_product_id)
+
+  def product_id(_plan, _interval), do: nil
 
   def product_id(plan), do: product_id(plan, :monthly)
 
