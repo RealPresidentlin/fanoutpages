@@ -1,7 +1,6 @@
 defmodule Fanoutpages.Payments.PolarEventRouter do
-  @moduledoc """
-  Routes Polar webhook events to database changes.
-  """
+  @moduledoc "Routes Polar webhook events to database changes."
+
   alias Fanoutpages.{Organizations, Payments, Repo}
   alias Fanoutpages.Billing.PlanConfig
   alias Fanoutpages.Payments.PaymentEvent
@@ -218,5 +217,40 @@ defmodule Fanoutpages.Payments.PolarEventRouter do
       ["order", "id"],
       if(String.starts_with?(event_type, "order"), do: ["id"], else: [])
     ])
+  end
+
+  defp product_id(data),
+    do: nested(data, [["product_id"], ["product", "id"], ["price", "product_id"]])
+
+  defp price_id(data),
+    do:
+      nested(data, [["price_id"], ["product_price_id"], ["price", "id"], ["product_price", "id"]])
+
+  defp amount(data),
+    do: nested(data, [["amount"], ["recurring_amount"], ["price", "price_amount"]])
+
+  defp nested(data, paths) do
+    Enum.find_value(paths, fn
+      [] -> nil
+      path -> get_in(data, path)
+    end)
+  end
+
+  defp parse_datetime(%DateTime{} = datetime), do: datetime
+
+  defp parse_datetime(value) when is_binary(value) do
+    case DateTime.from_iso8601(value) do
+      {:ok, datetime, _offset} -> DateTime.truncate(datetime, :second)
+      _ -> nil
+    end
+  end
+
+  defp parse_datetime(_value), do: nil
+
+  defp payload_sha256(payload) do
+    payload
+    |> Jason.encode!()
+    |> then(&:crypto.hash(:sha256, &1))
+    |> Base.encode16(case: :lower)
   end
 end
