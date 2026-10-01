@@ -10,7 +10,7 @@ defmodule FanoutpagesWeb.HomeLive do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope} shell={:plain} full_width>
+    <Layouts.app flash={@flash} current_scope={nil} shell={:plain} full_width>
       <div
         id="landing-page"
         class="min-h-screen overflow-hidden bg-base-100 text-base-content selection:bg-primary selection:text-primary-content"
@@ -29,12 +29,12 @@ defmodule FanoutpagesWeb.HomeLive do
             </p>
 
             <div class="mt-9 flex flex-wrap gap-3">
-              <.link
+              <%!-- <.link
                 navigate={primary_path(@current_scope)}
                 class="btn btn-primary btn-lg rounded-xl transition hover:-translate-y-0.5"
               >
                 {primary_label(@current_scope)} <.icon name="hero-arrow-right" class="size-5" />
-              </.link>
+              </.link> --%>
               <a href="#features" class="btn btn-ghost btn-lg">See how it works</a>
             </div>
 
@@ -97,13 +97,13 @@ defmodule FanoutpagesWeb.HomeLive do
           </div>
 
           <div class="mt-8 flex justify-center gap-3">
-            <.link
+            <%!-- <.link
               navigate={primary_path(@current_scope)}
               class="btn btn-primary btn-lg rounded-xl font-bold"
             >
               {primary_label(@current_scope)}
               <.icon name="hero-arrow-right" class="size-5" />
-            </.link>
+            </.link> --%>
           </div>
         </section>
       </div>
