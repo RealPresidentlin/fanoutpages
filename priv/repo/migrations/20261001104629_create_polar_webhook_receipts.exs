@@ -16,5 +16,5 @@ defmodule Fanoutpages.Repo.Migrations.CreatePolarWebhookReceipts do
     create unique_index(:polar_webhook_receipts, [:webhook_id])
     create index(:polar_webhook_receipts, [:event_type])
     create index(:polar_webhook_receipts, [:resource_type, :resource_id])
-  end
+  end 
 end
