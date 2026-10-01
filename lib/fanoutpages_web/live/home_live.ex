@@ -4,7 +4,7 @@ defmodule FanoutpagesWeb.HomeLive do
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket,
-       page_title: "Social media scheduling for people and their AI teammates."
+       page_title: "Social media scheduling for people and their AI agents."
      )}
   end
 
@@ -20,11 +20,11 @@ defmodule FanoutpagesWeb.HomeLive do
           <div class="mx-auto max-w-7xl px-6 py-16 lg:py-24">
             <h1 class="max-w-4xl text-5xl font-black tracking-[-0.045em] sm:text-6xl lg:text-7xl">
               Social media scheduling for people and
-              <span class="text-primary">their AI teammates.</span>
+              <span class="text-primary">their AI agents.</span>
             </h1>
 
             <p class="mt-7 max-w-2xl text-lg leading-8 text-base-content/65">
-              FanoutPages gives your human and AI teammates one shared workspace.
+              FanoutPages gives your human and AI agents one shared workspace.
               Draft, adapt, review, schedule, and publish to LinkedIn member profiles and Threads.
             </p>
 
@@ -68,9 +68,9 @@ defmodule FanoutpagesWeb.HomeLive do
 
               <div>
                 <.icon name="hero-cpu-chip" class="size-7 text-secondary mb-4" />
-                <h3 class="text-xl font-bold mb-2">Bring Your Own AI Teammates</h3>
+                <h3 class="text-xl font-bold mb-2">Bring Your Own AI Agents</h3>
                 <p class="text-sm leading-relaxed text-base-content/65">
-                  Connect externally hosted AI teammates through OAuth. They draft and submit content for review; your team schedules and publishes it. Require approval before publishing when your organization enables that policy.
+                  Connect externally hosted AI agents through OAuth. They draft and submit content for review; your team schedules and publishes it. Require approval before publishing when your organization enables that policy.
                 </p>
               </div>
 
@@ -92,7 +92,7 @@ defmodule FanoutpagesWeb.HomeLive do
               Ready to manage your social media channels?
             </h2>
             <p class="text-base leading-relaxed text-base-content/65">
-              Join teams that combine human decision-making with the AI teammates they already use.
+              Join teams that combine human decision-making with the AI agents they already use.
             </p>
           </div>
 
