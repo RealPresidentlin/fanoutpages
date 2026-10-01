@@ -1,11 +1,12 @@
 defmodule Fanoutpages.Repo.Migrations.CreateOrganizations do
   use Ecto.Migration
 
- def change do
+  def change do
     create table(:organizations, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string, null: false
       add :slug, :string, null: false
+      add :account_type, :string, null: false, default: "agency"
       add :created_by_user_id, references(:users, type: :binary_id, on_delete: :delete_all)
 
       add :plan, :string, null: false, default: "core"
@@ -29,14 +30,19 @@ defmodule Fanoutpages.Repo.Migrations.CreateOrganizations do
     create index(:organizations, [:polar_customer_id])
     create index(:organizations, [:polar_subscription_id])
     create index(:organizations, [:polar_product_id])
+    create index(:organizations, [:account_type])
 
     create constraint(:organizations, :organizations_plan_must_be_valid,
-             check: "plan IN ('core', 'scale', 'pro', 'enterprise')"
+             check: "plan IN ('starter', 'business', 'core', 'scale', 'pro', 'enterprise')"
            )
 
     create constraint(:organizations, :organizations_subscription_status_must_be_valid,
              check:
                "subscription_status IN ('trialing', 'active', 'expired', 'canceled', 'past_due')"
+           )
+
+    create constraint(:organizations, :organizations_account_type_must_be_valid,
+             check: "account_type IN ('business', 'agency')"
            )
   end
 end
