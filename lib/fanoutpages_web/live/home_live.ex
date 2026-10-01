@@ -70,7 +70,7 @@ defmodule FanoutpagesWeb.HomeLive do
                 <.icon name="hero-cpu-chip" class="size-7 text-secondary mb-4" />
                 <h3 class="text-xl font-bold mb-2">Bring Your Own AI Agents</h3>
                 <p class="text-sm leading-relaxed text-base-content/65">
-                  Connect externally hosted AI agents through OAuth. They draft and submit content for review; your team schedules and publishes it. Require approval before publishing when your organization enables that policy.
+                  Connect externally hosted AI agents through MCP. They draft and submit content for review; your team schedules and publishes it. Require approval before publishing when your organization enables that policy.
                 </p>
               </div>
 
