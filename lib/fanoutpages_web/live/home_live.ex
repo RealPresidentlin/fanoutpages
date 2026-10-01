@@ -40,7 +40,7 @@ defmodule FanoutpagesWeb.HomeLive do
 
             <p class="mt-5 flex items-center gap-2 text-sm font-semibold text-base-content/55">
               <.icon name="hero-check-circle" class="size-5 text-success" />
-              Free 14-day trial · No credit card required · Scoped REST and MCP access
+              Free 14-day trial · No credit card required
             </p>
           </div>
         </section>
