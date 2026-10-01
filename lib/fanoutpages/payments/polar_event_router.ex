@@ -13,4 +13,12 @@ defmodule Fanoutpages.Payments.PolarEventRouter do
     "subscription.canceled",
     "subscription.revoked"
   ]
+
+  @subscription_statuses ~w(incomplete incomplete_expired trialing active past_due canceled unpaid)
+
+  def handle(event, webhook_id) do
+    event_type = event["type"] || event["event_type"] || "unknown"
+    data = event["data"] || %{}
+    receipt_attrs = resource_attrs(data) |> Map.put(:payload_sha256, payload_sha256(event))
+  end
 end
