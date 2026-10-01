@@ -1,4 +1,5 @@
 import Config
+config :fanoutpages, Oban, testing: :manual
 
 # Configure your database
 #

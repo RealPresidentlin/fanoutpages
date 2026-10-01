@@ -11,6 +11,7 @@ defmodule Fanoutpages.Application do
       FanoutpagesWeb.Telemetry,
       Fanoutpages.Repo,
       {DNSCluster, query: Application.get_env(:fanoutpages, :dns_cluster_query) || :ignore},
+      {Oban, Application.fetch_env!(:fanoutpages, Oban)},
       {Phoenix.PubSub, name: Fanoutpages.PubSub},
       # Start a worker by calling: Fanoutpages.Worker.start_link(arg)
       # {Fanoutpages.Worker, arg},

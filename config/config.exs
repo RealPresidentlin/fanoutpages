@@ -7,6 +7,14 @@
 # General application configuration
 import Config
 
+config :fanoutpages, Oban,
+  engine: Oban.Engines.Basic,
+  notifier: Oban.Notifiers.Postgres,
+  queues: [default: 10],
+  lifeline: [rescue_after: {2, :hours}],
+  pruner: [max_age: {1, :day}],
+  repo: Fanoutpages.Repo
+
 config :fanoutpages,
   ecto_repos: [Fanoutpages.Repo],
   generators: [timestamp_type: :utc_datetime]

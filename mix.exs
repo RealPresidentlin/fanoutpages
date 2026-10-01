@@ -40,6 +40,7 @@ defmodule Fanoutpages.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:oban, "~> 2.23"},
       {:igniter, "~> 0.6", only: [:dev, :test]},
       {:phoenix, "~> 1.8.15"},
       {:phoenix_ecto, "~> 4.5"},
