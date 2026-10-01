@@ -19,6 +19,10 @@ config :fanoutpages,
   ecto_repos: [Fanoutpages.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :fanoutpages, Fanoutpages.Repo,
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
 # Configure the endpoint
 config :fanoutpages, FanoutpagesWeb.Endpoint,
   url: [host: "localhost"],
